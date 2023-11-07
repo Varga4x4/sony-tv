@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    border: 2px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+}
+
+#app {
+    border: 2px solid green;
+    height: 600px;
+    width: 900px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+main {
+    border: 2px solid blue;
+    height: 95%;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    font-size: larger;
+    gap: 10px;
+}
+
+.home-options {
+    font-size: larger;
+    font-weight: bolder;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+}
