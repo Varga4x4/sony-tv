@@ -1,37 +1,30 @@
 const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: "internet-contents",
-        className: "home-options",
         innerText: "Internet Contents"
     },
     {
         id: "digital-programme-list",
-        className: "home-options",
         innerText: "Digital Programme List"
     },
     {
         id: "digital-epg",
-        className: "home-options",
         innerText: "Digital EPG"
     },
     {
         id: "applications",
-        className: "home-options",
         innerText: "Applications"
     },
     {
         id: "recordings",
-        className: "home-options",
         innerText: "Recordings"
     },
     {
         id: "media",
-        className: "home-options",
         innerText: "Media"
     },
     {
         id: "settings",
-        className: "home-options",
         innerText: "Settings"
     },
 ]
@@ -83,9 +76,9 @@ const renderHomeMenu = () => {
     }, mainElement)
 
     HOME_MENU_BUTTONS_ARRAY.forEach((option) => {
-        const homeMenuOptionsButtonElement = createElement("button", {
+        createElement("button", {
             id: option.id,
-            className: option.className,
+            className: "home-options",
             innerText: option.innerText
         }, mainElement)
     })
