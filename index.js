@@ -29,18 +29,6 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
 ]
 
-const ELEMENT_IDS = {
-    // HOME_MENU
-    internetContents: "internet-contents",
-    digitalProgrammeList: "digital-programme-list",
-    digitalEpg: "digital-epg",
-    applications: "applications",
-    recordings: "recordings",
-    media: "media",
-    settings: "settings",
-    //
-}
-
 // ELEMENTS
 const appElement = document.getElementById("app")
 //
@@ -54,9 +42,7 @@ const createElement = (tagType, attrObj, parentElement) => {
     const newElement = document.createElement(tagType)
 
     if (attrObj) {
-        Object.entries(attrObj).forEach((entry) => {
-            newElement[entry[0]] = entry[1]
-        })
+        Object.entries(attrObj).forEach(([key, value]) => newElement[key] = value)
     }
 
     if (parentElement) {
@@ -75,11 +61,11 @@ const renderHomeMenu = () => {
         innerText: "HOME"
     }, mainElement)
 
-    HOME_MENU_BUTTONS_ARRAY.forEach((option) => {
+    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText }) => {
         createElement("button", {
-            id: option.id,
+            id: id,
             className: "home-options",
-            innerText: option.innerText
+            innerText: innerText
         }, mainElement)
     })
 }
