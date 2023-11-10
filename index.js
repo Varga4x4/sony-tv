@@ -63,9 +63,9 @@ const renderHomeMenu = () => {
 
     HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText }) => {
         createElement("button", {
-            id: id,
+            id,
             className: "home-options",
-            innerText: innerText
+            innerText
         }, mainElement)
     })
 }
