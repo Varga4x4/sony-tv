@@ -18,6 +18,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 10px;
 }
 
 main {
@@ -38,4 +39,24 @@ main {
 
 p {
     margin: 0;
+}
+
+#wrapper {
+    border: 2px solid red;
+    height: 463px;
+}
+
+#internet-contents-wrapper-element {
+    border: 2px solid green;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 55px;
+}
+
+.sub-options {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 20px;
+    font-weight: bold;
 }
