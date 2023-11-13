@@ -1,32 +1,52 @@
+// ELEMENT_IDS
+ELEMENT_IDS = {
+    app: "app",
+    subMenuWrapper: "sub-menu-wrapper",
+    internetContentsWrapper: "internet-contents-wrapper-element",
+    internetContentsTab: "internet-contents-tab",
+    digitalProgrammeListTab: "digital-programme-list-tab",
+    digitalEpgTab: "digital-epg-tab",
+    applicationsTab: "applications-tab",
+    applicationsTabWrapper: "applications-wrapper-element",
+    photoSharingPlus: "photo-sharing-plus",
+    photoFrameMode: "photo-frame-mode",
+    recordingsTab: "recordings-tab",
+    mediaTab: "media-tab",
+    settingsTab: "settings-tab",
+}
+//
+
 const HOME_MENU_BUTTONS_ARRAY = [
     {
-        id: "internetcontents-tab",
+        id: ELEMENT_IDS.internetContentsTab,
         innerText: "Internet Contents",
         onclick: () => renderInternetContents()
     },
     {
-        id: "digital-programme-list-tab",
+        id: ELEMENT_IDS.digitalProgrammeListTab,
         innerText: "Digital Programme List",
         onclick: () => renderDigitalProgrammeList()
     },
     {
-        id: "digital-epg-tab",
-        innerText: "Digital EPG"
+        id: ELEMENT_IDS.digitalEpgTab,
+        innerText: "Digital EPG",
+        onclick: () => renderDigitalEpg()
     },
     {
-        id: "applications-tab",
-        innerText: "Applications"
+        id: ELEMENT_IDS.applicationsTab,
+        innerText: "Applications",
+        onclick: () => renderApplications()
     },
     {
-        id: "recordings-tab",
+        id: ELEMENT_IDS.recordingsTab,
         innerText: "Recordings"
     },
     {
-        id: "media-tab",
+        id: ELEMENT_IDS.mediaTab,
         innerText: "Media"
     },
     {
-        id: "settings-tab",
+        id: ELEMENT_IDS.settingsTab,
         innerText: "Settings"
     },
 ]
@@ -54,26 +74,22 @@ const INTERNET_CONTENS_BUTTONS_ARRAY = [
     },
 ]
 
-// ELEMENT_IDS
-ELEMENT_IDS = {
-    app: "app",
-    wrapper: "wrapper",
-    internetContentsWrapper: "internet-contents-wrapper-element",
-    internetContentsTab: "internetcontents-tab",
-    programmeListTab: "digital-programme-list-tab",
-    digitalEpgTab: "digital-epg-tab",
-    applicationsTab: "applications-tab",
-    recordingsTab: "recordings-tab",
-    mediaTab: "media-tab",
-    settingsTab: "settings-tab",
-}
-//
+const APPLICATIONS_BUTTONS_ARRAY = [
+    {
+        id: ELEMENT_IDS.photoSharingPlus,
+        innerText: "Photo Sharing Plus",
+        onclick: () => console.log("Photo Sharing Plus"),
+    },
+    {
+        id: ELEMENT_IDS.photoFrameMode,
+        innerText: "Photo Frame Mode",
+        onclick: () => console.log("Photo Frame Mode"),
+    },
+]
 
 // ELEMENTS
 const appElement = document.getElementById(ELEMENT_IDS.app)
-const wrapperElement = document.getElementById(ELEMENT_IDS.wrapper)
 //
-
 
 // HELPERS
 const createElement = (tagType, attrObj, parentElement) => {
@@ -94,21 +110,20 @@ const createElement = (tagType, attrObj, parentElement) => {
     return newElement
 }
 
-const createGlobalWrapper = () => {
-    createElement("div", {
-        id: ELEMENT_IDS.wrapper
-    }, appElement)
-}
-
 const handleOptionsElementOnClick = (tabName) => {
     const allTabIds = Object.entries(ELEMENT_IDS)
         .filter(entry => entry[0].endsWith('Tab'))
         .map(entry => entry[1])
     const tabNameTabButtonIdValue = ELEMENT_IDS[`${tabName}Tab`]
 
-    allTabIds.forEach((tabId) => {
-        document.getElementById(tabId).disabled = tabId === tabNameTabButtonIdValue
-    })
+    allTabIds.forEach((tabId) => document.getElementById(tabId).disabled = tabId === tabNameTabButtonIdValue)
+}
+
+const removeSubMenuWrapperElement = (element) => {
+    element = document.getElementById(ELEMENT_IDS.subMenuWrapper)
+    if (element) {
+        element.remove()
+    }
 }
 //
 
@@ -120,46 +135,72 @@ const renderHomeMenu = () => {
         innerText: "HOME"
     }, mainElement)
 
-    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => {
-        createElement("button", {
-            id,
-            className: "home-options",
-            innerText,
-            onclick
-        }, mainElement)
-    })
+    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
+        id,
+        className: "home-options",
+        innerText,
+        onclick
+    }, mainElement))
 }
 //
 
 // RENDER_INTERNET_CONTENTS
 const renderInternetContents = () => {
-    // createGlobalWrapper()
+    removeSubMenuWrapperElement()
     handleOptionsElementOnClick("internetContents")
-    const wrapperElement = createElement("div", {
-        id: ELEMENT_IDS.wrapper
+
+    const subMenuWrapperElement = createElement("div", {
+        id: ELEMENT_IDS.subMenuWrapper
     }, appElement)
 
     const internetContentsWrapperElement = createElement("div", {
         id: ELEMENT_IDS.internetContentsWrapper
-    }, wrapper)
+    }, subMenuWrapperElement)
 
-    INTERNET_CONTENS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => {
-        createElement("button", {
-            id,
-            className: "sub-options",
-            innerText,
-            onclick
-        }, internetContentsWrapperElement)
-    })
-    console.log(wrapperElement)
+    INTERNET_CONTENS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
+        id,
+        className: "sub-options",
+        innerText,
+        onclick
+    }, internetContentsWrapperElement))
 }
 //
 
 // RENDER_DIGITAL_PROGRAMME_LIST
 const renderDigitalProgrammeList = () => {
-    console.log(wrapperElement)
-    handleOptionsElementOnClick("programmeList")
+    removeSubMenuWrapperElement()
+    handleOptionsElementOnClick("digitalProgrammeList")
     console.log("Digital Programme List")
+}
+//
+
+// RENDER_DIGITAL_EPG
+const renderDigitalEpg = () => {
+    removeSubMenuWrapperElement()
+    handleOptionsElementOnClick("digitalEpg")
+    console.log("Digital EPG")
+}
+//
+
+// APPLICATIONS
+const renderApplications = () => {
+    removeSubMenuWrapperElement()
+    handleOptionsElementOnClick("applications")
+
+    const subMenuWrapperElement = createElement("div", {
+        id: ELEMENT_IDS.subMenuWrapper
+    }, appElement)
+
+    const applicationsWrapperElement = createElement("div", {
+        id: ELEMENT_IDS.applicationsTabWrapper
+    }, subMenuWrapperElement)
+
+    APPLICATIONS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
+        id,
+        className: "sub-options",
+        innerText,
+        onclick
+    }, applicationsWrapperElement))
 }
 //
 
