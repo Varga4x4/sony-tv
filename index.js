@@ -1,33 +1,32 @@
 const ELEMENT_IDS = {
     app: "app",
-    subMenuWrapper: "sub-menu-wrapper",
-    internetContentsWrapper: "internet-contents-wrapper-element",
+    subMenu: "sub-menu",
     internetContentsTab: "internet-contents-tab",
     digitalProgrammeListTab: "digital-programme-list-tab",
     digitalEpgTab: "digital-epg-tab",
     applicationsTab: "applications-tab",
-    applicationsTabWrapper: "applications-wrapper-element",
     photoSharingPlus: "photo-sharing-plus",
     photoFrameMode: "photo-frame-mode",
     recordingsTab: "recordings-tab",
-    recordingsTabWrapper: "recordings-wrapper-element",
     titleList: "title-list",
     timerList: "timer-list",
     errorList: "error-list",
     manualTimerRec: "manual-timer-rec",
     mediaTab: "media-tab",
-    mediaTabWrapper: "media-wrapper-element",
     photo: "photo",
     music: "music",
     video: "video",
     settingsTab: "settings-tab",
-    settingsTabWrapper: "settings-wrapper-element",
     systemSettings: "system-settings",
     customerSupport: "customer-support",
 }
 
 // ELEMENTS
 const appElement = document.getElementById(ELEMENT_IDS.app)
+//
+
+//GETTERS
+const getMainElement = () => document.querySelector("main")
 //
 
 // HELPERS
@@ -50,149 +49,82 @@ const createElement = (tagType, attrObj, parentElement) => {
 }
 
 const handleOptionsElementOnClick = (tabName) => {
-    const allTabIds = Object.entries(ELEMENT_IDS)
+    const tabNameTabButtonIdValue = ELEMENT_IDS[`${tabName}Tab`]
+    Object.entries(ELEMENT_IDS)
         .filter(entry => entry[0].endsWith('Tab'))
         .map(entry => entry[1])
-    const tabNameTabButtonIdValue = ELEMENT_IDS[`${tabName}Tab`]
-
-    allTabIds.forEach((tabId) => document.getElementById(tabId).disabled = tabId === tabNameTabButtonIdValue)
+        .forEach((tabId) => document.getElementById(tabId).disabled = tabId === tabNameTabButtonIdValue)
 }
 
-const removeSubMenuWrapperElement = (element) => {
-    element = document.getElementById(ELEMENT_IDS.subMenuWrapper)
-    if (element) {
-        element.remove()
-    }
-
-    // Presh, is that correct? Throws me this: Uncaught TypeError: Cannot read properties of undefined (reading 'remove')
-    // element = document.getElementById(ELEMENT_IDS.subMenuWrapper)?.element.remove()
-    //
-}
+const removeSubMenuElement = () => document.getElementById(ELEMENT_IDS.subMenu)?.remove()
 //
 
-const renderInternetContents = () => {
-    removeSubMenuWrapperElement()
-    handleOptionsElementOnClick("internetContents")
+const renderSubMenu = (options, param2, index) => {
+    removeSubMenuElement()
+    handleOptionsElementOnClick(param2)
 
-    const subMenuWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.subMenuWrapper
-    }, appElement)
+    const mainElement = getMainElement()
 
-    const internetContentsWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.internetContentsWrapper,
-        className: "options-wrapper"
-    }, subMenuWrapperElement)
+    const subMenuElement = createElement("div", {
+        id: ELEMENT_IDS.subMenu,
+        className: "options-wrapper2"
+    }, mainElement)
 
-    INTERNET_CONTENS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
+    const elementHeight = "40.67px"
+    const gapHeight = "20px"
+
+    subMenuElement.style.top = `calc(${index + 1} * ${elementHeight} + ${index + 1} * ${gapHeight})`
+
+    options.forEach(({ id, innerText, onclick }) => createElement("button", {
         id,
         className: "sub-options",
         innerText,
         onclick
-    }, internetContentsWrapperElement))
+    }, subMenuElement))
 }
 
+
+// TODO: make 1 function from the 2
 const renderDigitalProgrammeList = () => {
-    removeSubMenuWrapperElement()
+    removeSubMenuElement()
     handleOptionsElementOnClick("digitalProgrammeList")
     console.log("Digital Programme List")
 }
 
 const renderDigitalEpg = () => {
-    removeSubMenuWrapperElement()
+    removeSubMenuElement()
     handleOptionsElementOnClick("digitalEpg")
     console.log("Digital EPG")
-}
-
-const renderApplications = () => {
-    removeSubMenuWrapperElement()
-    handleOptionsElementOnClick("applications")
-
-    const subMenuWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.subMenuWrapper
-    }, appElement)
-
-    const applicationsWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.applicationsTabWrapper,
-        className: "options-wrapper"
-    }, subMenuWrapperElement)
-
-    APPLICATIONS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
-        className: "sub-options",
-        innerText,
-        onclick
-    }, applicationsWrapperElement))
-}
-
-const renderRecordings = () => {
-    removeSubMenuWrapperElement()
-    handleOptionsElementOnClick("recordings")
-
-    const subMenuWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.subMenuWrapper
-    }, appElement)
-
-    const recordingsWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.recordingsTabWrapper,
-        className: "options-wrapper"
-    }, subMenuWrapperElement)
-
-    RECORDINGS_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
-        className: "sub-options",
-        innerText,
-        onclick
-    }, recordingsWrapperElement))
-}
-
-const renderMedia = () => {
-    removeSubMenuWrapperElement()
-    handleOptionsElementOnClick("media")
-
-    const subMenuWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.subMenuWrapper
-    }, appElement)
-
-    const mediaWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.mediaTabWrapper,
-        className: "options-wrapper"
-    }, subMenuWrapperElement)
-
-    MEDIA_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
-        className: "sub-options",
-        innerText,
-        onclick
-    }, mediaWrapperElement))
-}
-
-const renderSettings = () => {
-    removeSubMenuWrapperElement()
-    handleOptionsElementOnClick("settings")
-
-    const subMenuWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.subMenuWrapper
-    }, appElement)
-
-    const settingsWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.settingsTabWrapper,
-        className: "options-wrapper"
-    }, subMenuWrapperElement)
-
-    SETTINGS_BUTTON_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
-        className: "sub-options",
-        innerText,
-        onclick
-    }, settingsWrapperElement))
 }
 
 // DATA
 const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.internetContentsTab,
+        param2: "internetContents",
         innerText: "Internet Contents",
-        onclick: renderInternetContents
+        options: [
+            {
+                id: "amazon-prime-video",
+                innerText: "Amazon Prime Video",
+                onclick: () => console.log("Amazon Prime Video")
+            },
+            {
+                id: "netflix",
+                innerText: "Netflix",
+                onclick: () => console.log("Netflix")
+            },
+            {
+                id: "bbc-iplayer",
+                innerText: "BBC iPlayer",
+                onclick: () => console.log("BBC iPlayer")
+            },
+            {
+                id: "youtube",
+                innerText: "YouTube",
+                onclick: () => console.log("YouTube")
+            },
+        ]
     },
     {
         id: ELEMENT_IDS.digitalProgrammeListTab,
@@ -206,113 +138,86 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.applicationsTab,
+        param2: "applications",
         innerText: "Applications",
-        onclick: renderApplications
+        options: [
+            {
+                id: ELEMENT_IDS.photoSharingPlus,
+                innerText: "Photo Sharing Plus",
+                onclick: () => console.log("Photo Sharing Plus"),
+            },
+            {
+                id: ELEMENT_IDS.photoFrameMode,
+                innerText: "Photo Frame Mode",
+                onclick: () => console.log("Photo Frame Mode"),
+            },
+        ]
     },
     {
         id: ELEMENT_IDS.recordingsTab,
+        param2: "recordings",
         innerText: "Recordings",
-        onclick: renderRecordings
+        options: [
+            {
+                id: ELEMENT_IDS.titleList,
+                innerText: "Title List",
+                onclick: () => console.log("Title List")
+            },
+            {
+                id: ELEMENT_IDS.timerList,
+                innerText: "Timer List",
+                onclick: () => console.log("Timer List"),
+            },
+            {
+                id: ELEMENT_IDS.errorList,
+                innerText: "Error List",
+                onclick: () => console.log("Error List"),
+            },
+            {
+                id: ELEMENT_IDS.manualTimerRec,
+                innerText: "Manual Timer REC",
+                onclick: () => console.log("Manual Timer REC"),
+            },
+        ]
     },
     {
         id: ELEMENT_IDS.mediaTab,
+        param2: "media",
         innerText: "Media",
-        onclick: renderMedia
+        options: [
+            {
+                id: ELEMENT_IDS.photo,
+                innerText: "Photo",
+                onclick: () => console.log("Photo"),
+            },
+            {
+                id: ELEMENT_IDS.music,
+                innerText: "Music",
+                onclick: () => console.log("Music"),
+            },
+            {
+                id: ELEMENT_IDS.video,
+                innerText: "Video",
+                onclick: () => console.log("Video")
+            },
+        ]
     },
     {
         id: ELEMENT_IDS.settingsTab,
+        param2: "settings",
         innerText: "Settings",
-        onclick: renderSettings
-    },
-]
-
-const INTERNET_CONTENS_BUTTONS_ARRAY = [
-    {
-        id: "amazon-prime-video",
-        innerText: "Amazon Prime Video",
-        onclick: () => console.log("Amazon Prime Video")
-    },
-    {
-        id: "netflix",
-        innerText: "Netflix",
-        onclick: () => console.log("Netflix")
-    },
-    {
-        id: "bbc-iplayer",
-        innerText: "BBC iPlayer",
-        onclick: () => console.log("BBC iPlayer")
-    },
-    {
-        id: "youtube",
-        innerText: "YouTube",
-        onclick: () => console.log("YouTube")
-    },
-]
-
-const APPLICATIONS_BUTTONS_ARRAY = [
-    {
-        id: ELEMENT_IDS.photoSharingPlus,
-        innerText: "Photo Sharing Plus",
-        onclick: () => console.log("Photo Sharing Plus"),
-    },
-    {
-        id: ELEMENT_IDS.photoFrameMode,
-        innerText: "Photo Frame Mode",
-        onclick: () => console.log("Photo Frame Mode"),
-    },
-]
-
-const RECORDINGS_BUTTONS_ARRAY = [
-    {
-        id: ELEMENT_IDS.titleList,
-        innerText: "Title List",
-        onclick: () => console.log("Title List")
-    },
-    {
-        id: ELEMENT_IDS.timerList,
-        innerText: "Timer List",
-        onclick: () => console.log("Timer List"),
-    },
-    {
-        id: ELEMENT_IDS.errorList,
-        innerText: "Error List",
-        onclick: () => console.log("Error List"),
-    },
-    {
-        id: ELEMENT_IDS.manualTimerRec,
-        innerText: "Manual Timer REC",
-        onclick: () => console.log("Manual Timer REC"),
-    },
-]
-
-const MEDIA_BUTTONS_ARRAY = [
-    {
-        id: ELEMENT_IDS.photo,
-        innerText: "Photo",
-        onclick: () => console.log("Photo"),
-    },
-    {
-        id: ELEMENT_IDS.music,
-        innerText: "Music",
-        onclick: () => console.log("Music"),
-    },
-    {
-        id: ELEMENT_IDS.video,
-        innerText: "Video",
-        onclick: () => console.log("Video")
-    },
-]
-
-const SETTINGS_BUTTON_ARRAY = [
-    {
-        id: ELEMENT_IDS.systemSettings,
-        innerText: "System Settings",
-        onclick: () => console.log("System Settings"),
-    },
-    {
-        id: ELEMENT_IDS.customerSupport,
-        innerText: "Customer Support",
-        onclick: () => console.log("Customer Support"),
+        options: [
+            {
+                id: ELEMENT_IDS.systemSettings,
+                innerText: "System Settings",
+                onclick: () => console.log("System Settings"),
+            },
+            {
+                id: ELEMENT_IDS.customerSupport,
+                innerText: "Customer Support",
+                onclick: () => console.log("Customer Support"),
+            },
+        ]
     },
 ]
 //
@@ -324,11 +229,21 @@ const renderHomeMenu = () => {
         innerText: "HOME"
     }, mainElement)
 
-    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, onclick }) => createElement("button", {
+    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, options, param2, onclick }, index) => createElement("button", {
         id,
         className: "home-options",
         innerText,
-        onclick
+        onclick: () => {
+
+            if (onclick) {
+                onclick()
+            }
+
+            if (options && param2) {
+                renderSubMenu(options, param2, index)
+            }
+
+        }
     }, mainElement))
 }
 

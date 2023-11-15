@@ -28,6 +28,7 @@ main {
     flex-direction: column;
     font-size: 30px;
     gap: 20px;
+    position: relative;
 }
 
 .home-options {
@@ -75,4 +76,15 @@ p {
 
 #settings-wrapper-element {
     margin-top: 388px;
+}
+
+.options-wrapper2 {
+    border: 2px solid gold;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    right: 0;
+    transform: translateX(calc(100% + 20px));
+    /* top: 60px; */
 }
