@@ -5,28 +5,16 @@ const ELEMENT_IDS = {
     digitalProgrammeListTab: "digital-programme-list-tab",
     digitalEpgTab: "digital-epg-tab",
     applicationsTab: "applications-tab",
-    photoSharingPlus: "photo-sharing-plus",
-    photoFrameMode: "photo-frame-mode",
     recordingsTab: "recordings-tab",
-    titleList: "title-list",
-    timerList: "timer-list",
-    errorList: "error-list",
-    manualTimerRec: "manual-timer-rec",
     mediaTab: "media-tab",
-    photo: "photo",
-    music: "music",
-    video: "video",
     settingsTab: "settings-tab",
-    systemSettings: "system-settings",
-    customerSupport: "customer-support",
+    screenWrapper: "screen-wrapper",
+    screenText: "screen"
 }
 
 // ELEMENTS
 const appElement = document.getElementById(ELEMENT_IDS.app)
-//
-
-//GETTERS
-const getMainElement = () => document.querySelector("main")
+const mainElement = document.querySelector("main")
 //
 
 // HELPERS
@@ -63,8 +51,6 @@ const renderSubMenu = (options, param2, index) => {
     removeSubMenuElement()
     handleOptionsElementOnClick(param2)
 
-    const mainElement = getMainElement()
-
     const subMenuElement = createElement("div", {
         id: ELEMENT_IDS.subMenu,
         className: "options-wrapper2"
@@ -75,26 +61,26 @@ const renderSubMenu = (options, param2, index) => {
 
     subMenuElement.style.top = `calc(${index + 1} * ${elementHeight} + ${index + 1} * ${gapHeight})`
 
-    options.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
+    options.forEach(({ innerText, onclick }) => createElement("button", {
         className: "sub-options",
         innerText,
         onclick
     }, subMenuElement))
 }
 
-
-// TODO: make 1 function from the 2
-const renderDigitalProgrammeList = () => {
+const renderNewScreen = () => {
     removeSubMenuElement()
-    handleOptionsElementOnClick("digitalProgrammeList")
-    console.log("Digital Programme List")
-}
 
-const renderDigitalEpg = () => {
-    removeSubMenuElement()
-    handleOptionsElementOnClick("digitalEpg")
-    console.log("Digital EPG")
+    mainElement.remove()
+
+    const screenWrapperElement = createElement("div", {
+        id: ELEMENT_IDS.screenWrapper
+    }, appElement)
+
+    const screenText = createElement("p", {
+        id: ELEMENT_IDS.screenText,
+        innerText: "???"
+    }, screenWrapperElement)
 }
 
 // DATA
@@ -105,22 +91,18 @@ const HOME_MENU_BUTTONS_ARRAY = [
         innerText: "Internet Contents",
         options: [
             {
-                id: "amazon-prime-video",
                 innerText: "Amazon Prime Video",
                 onclick: () => console.log("Amazon Prime Video")
             },
             {
-                id: "netflix",
                 innerText: "Netflix",
                 onclick: () => console.log("Netflix")
             },
             {
-                id: "bbc-iplayer",
                 innerText: "BBC iPlayer",
                 onclick: () => console.log("BBC iPlayer")
             },
             {
-                id: "youtube",
                 innerText: "YouTube",
                 onclick: () => console.log("YouTube")
             },
@@ -129,12 +111,12 @@ const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.digitalProgrammeListTab,
         innerText: "Digital Programme List",
-        onclick: renderDigitalProgrammeList
+        onclick: renderNewScreen
     },
     {
         id: ELEMENT_IDS.digitalEpgTab,
         innerText: "Digital EPG",
-        onclick: renderDigitalEpg
+        onclick: renderNewScreen
     },
     {
         id: ELEMENT_IDS.applicationsTab,
@@ -142,12 +124,10 @@ const HOME_MENU_BUTTONS_ARRAY = [
         innerText: "Applications",
         options: [
             {
-                id: ELEMENT_IDS.photoSharingPlus,
                 innerText: "Photo Sharing Plus",
                 onclick: () => console.log("Photo Sharing Plus"),
             },
             {
-                id: ELEMENT_IDS.photoFrameMode,
                 innerText: "Photo Frame Mode",
                 onclick: () => console.log("Photo Frame Mode"),
             },
@@ -159,22 +139,18 @@ const HOME_MENU_BUTTONS_ARRAY = [
         innerText: "Recordings",
         options: [
             {
-                id: ELEMENT_IDS.titleList,
                 innerText: "Title List",
                 onclick: () => console.log("Title List")
             },
             {
-                id: ELEMENT_IDS.timerList,
                 innerText: "Timer List",
                 onclick: () => console.log("Timer List"),
             },
             {
-                id: ELEMENT_IDS.errorList,
                 innerText: "Error List",
                 onclick: () => console.log("Error List"),
             },
             {
-                id: ELEMENT_IDS.manualTimerRec,
                 innerText: "Manual Timer REC",
                 onclick: () => console.log("Manual Timer REC"),
             },
@@ -186,17 +162,14 @@ const HOME_MENU_BUTTONS_ARRAY = [
         innerText: "Media",
         options: [
             {
-                id: ELEMENT_IDS.photo,
                 innerText: "Photo",
                 onclick: () => console.log("Photo"),
             },
             {
-                id: ELEMENT_IDS.music,
                 innerText: "Music",
                 onclick: () => console.log("Music"),
             },
             {
-                id: ELEMENT_IDS.video,
                 innerText: "Video",
                 onclick: () => console.log("Video")
             },
@@ -208,12 +181,10 @@ const HOME_MENU_BUTTONS_ARRAY = [
         innerText: "Settings",
         options: [
             {
-                id: ELEMENT_IDS.systemSettings,
                 innerText: "System Settings",
                 onclick: () => console.log("System Settings"),
             },
             {
-                id: ELEMENT_IDS.customerSupport,
                 innerText: "Customer Support",
                 onclick: () => console.log("Customer Support"),
             },
@@ -223,8 +194,6 @@ const HOME_MENU_BUTTONS_ARRAY = [
 //
 
 const renderHomeMenu = () => {
-    const mainElement = createElement("main", undefined, appElement)
-
     createElement("p", {
         innerText: "HOME"
     }, mainElement)

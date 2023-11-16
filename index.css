@@ -17,9 +17,8 @@ body {
     width: 900px;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
-    padding-top: 20px
 }
 
 main {
@@ -62,22 +61,6 @@ p {
     font-weight: bold;
 }
 
-#applications-wrapper-element {
-    margin-top: 240px;
-}
-
-#recordings-wrapper-element {
-    margin-top: 300px;
-}
-
-#media-wrapper-element {
-    margin-top: 360px;
-}
-
-#settings-wrapper-element {
-    margin-top: 388px;
-}
-
 .options-wrapper2 {
     border: 2px solid gold;
     display: flex;
@@ -86,5 +69,14 @@ p {
     position: absolute;
     right: 0;
     transform: translateX(calc(100% + 20px));
-    /* top: 60px; */
+}
+
+#screen-wrapper {
+    border: 2px solid red;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
 }
