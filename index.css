@@ -61,7 +61,7 @@ p {
     font-weight: bold;
 }
 
-.options-wrapper2 {
+.options-wrapper {
     border: 2px solid gold;
     display: flex;
     flex-direction: column;
@@ -76,7 +76,9 @@ p {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 50px;
+    gap: 20px;
 }

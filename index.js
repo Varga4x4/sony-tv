@@ -12,9 +12,11 @@ const ELEMENT_IDS = {
     screenText: "screen"
 }
 
+const ELEMENT_HEIGHT = "40.67px"
+const GAP_HEIGHT = "20px"
+
 // ELEMENTS
 const appElement = document.getElementById(ELEMENT_IDS.app)
-const mainElement = document.querySelector("main")
 //
 
 // HELPERS
@@ -47,19 +49,23 @@ const handleOptionsElementOnClick = (tabName) => {
 const removeSubMenuElement = () => document.getElementById(ELEMENT_IDS.subMenu)?.remove()
 //
 
-const renderSubMenu = (options, param2, index) => {
+// GETTERS
+const getMainElement = () => document.querySelector("main")
+const getScreenWrapperElement = () => document.getElementById(ELEMENT_IDS.screenWrapper)
+//
+
+const renderSubMenu = (options, buttonName, index) => {
     removeSubMenuElement()
-    handleOptionsElementOnClick(param2)
+    handleOptionsElementOnClick(buttonName)
+
+    const mainElement = getMainElement()
 
     const subMenuElement = createElement("div", {
         id: ELEMENT_IDS.subMenu,
-        className: "options-wrapper2"
+        className: "options-wrapper"
     }, mainElement)
 
-    const elementHeight = "40.67px"
-    const gapHeight = "20px"
-
-    subMenuElement.style.top = `calc(${index + 1} * ${elementHeight} + ${index + 1} * ${gapHeight})`
+    subMenuElement.style.top = `calc(${index} * ${ELEMENT_HEIGHT} + ${index} * ${GAP_HEIGHT})`
 
     options.forEach(({ innerText, onclick }) => createElement("button", {
         className: "sub-options",
@@ -68,26 +74,11 @@ const renderSubMenu = (options, param2, index) => {
     }, subMenuElement))
 }
 
-const renderNewScreen = () => {
-    removeSubMenuElement()
-
-    mainElement.remove()
-
-    const screenWrapperElement = createElement("div", {
-        id: ELEMENT_IDS.screenWrapper
-    }, appElement)
-
-    const screenText = createElement("p", {
-        id: ELEMENT_IDS.screenText,
-        innerText: "???"
-    }, screenWrapperElement)
-}
-
 // DATA
 const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.internetContentsTab,
-        param2: "internetContents",
+        buttonName: "internetContents",
         innerText: "Internet Contents",
         options: [
             {
@@ -111,16 +102,16 @@ const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.digitalProgrammeListTab,
         innerText: "Digital Programme List",
-        onclick: renderNewScreen
+        onclick: () => console.log(innerText)
     },
     {
         id: ELEMENT_IDS.digitalEpgTab,
         innerText: "Digital EPG",
-        onclick: renderNewScreen
+        onclick: () => console.log(innerText)
     },
     {
         id: ELEMENT_IDS.applicationsTab,
-        param2: "applications",
+        buttonName: "applications",
         innerText: "Applications",
         options: [
             {
@@ -135,7 +126,7 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.recordingsTab,
-        param2: "recordings",
+        buttonName: "recordings",
         innerText: "Recordings",
         options: [
             {
@@ -158,7 +149,7 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.mediaTab,
-        param2: "media",
+        buttonName: "media",
         innerText: "Media",
         options: [
             {
@@ -177,7 +168,7 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.settingsTab,
-        param2: "settings",
+        buttonName: "settings",
         innerText: "Settings",
         options: [
             {
@@ -194,24 +185,48 @@ const HOME_MENU_BUTTONS_ARRAY = [
 //
 
 const renderHomeMenu = () => {
+    const screenWrapperElement = getScreenWrapperElement()
+
+    if (screenWrapperElement) {
+        screenWrapperElement.remove()
+    }
+
+    const mainElement = createElement("main", undefined, appElement)
+
     createElement("p", {
         innerText: "HOME"
     }, mainElement)
 
-    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, options, param2, onclick }, index) => createElement("button", {
+    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, options, buttonName, onclick }, index) => createElement("button", {
         id,
         className: "home-options",
         innerText,
         onclick: () => {
 
             if (onclick) {
-                onclick()
+                removeSubMenuElement()
+
+                const mainElement = getMainElement()
+                mainElement.remove()
+
+                const screenWrapperElement = createElement("div", {
+                    id: ELEMENT_IDS.screenWrapper
+                }, appElement)
+
+                const screenText = createElement("p", {
+                    id: ELEMENT_IDS.screenText,
+                    innerText: innerText
+                }, screenWrapperElement)
+
+                const backButtonElement = createElement("button", {
+                    innerText: "Back",
+                    onclick: renderHomeMenu
+                }, screenWrapperElement)
             }
 
-            if (options && param2) {
-                renderSubMenu(options, param2, index)
+            if (options && buttonName) {
+                renderSubMenu(options, buttonName, index)
             }
-
         }
     }, mainElement))
 }
