@@ -5,28 +5,18 @@ const ELEMENT_IDS = {
     digitalProgrammeListTab: "digital-programme-list-tab",
     digitalEpgTab: "digital-epg-tab",
     applicationsTab: "applications-tab",
-    photoSharingPlus: "photo-sharing-plus",
-    photoFrameMode: "photo-frame-mode",
     recordingsTab: "recordings-tab",
-    titleList: "title-list",
-    timerList: "timer-list",
-    errorList: "error-list",
-    manualTimerRec: "manual-timer-rec",
     mediaTab: "media-tab",
-    photo: "photo",
-    music: "music",
-    video: "video",
     settingsTab: "settings-tab",
-    systemSettings: "system-settings",
-    customerSupport: "customer-support",
+    screenWrapper: "screen-wrapper",
+    screenText: "screen"
 }
+
+const ELEMENT_HEIGHT = "40.67px"
+const GAP_HEIGHT = "20px"
 
 // ELEMENTS
 const appElement = document.getElementById(ELEMENT_IDS.app)
-//
-
-//GETTERS
-const getMainElement = () => document.querySelector("main")
 //
 
 // HELPERS
@@ -59,68 +49,51 @@ const handleOptionsElementOnClick = (tabName) => {
 const removeSubMenuElement = () => document.getElementById(ELEMENT_IDS.subMenu)?.remove()
 //
 
-const renderSubMenu = (options, param2, index) => {
+// GETTERS
+const getMainElement = () => document.querySelector("main")
+const getScreenWrapperElement = () => document.getElementById(ELEMENT_IDS.screenWrapper)
+//
+
+const renderSubMenu = (options, buttonName, index) => {
     removeSubMenuElement()
-    handleOptionsElementOnClick(param2)
+    handleOptionsElementOnClick(buttonName)
 
     const mainElement = getMainElement()
 
     const subMenuElement = createElement("div", {
         id: ELEMENT_IDS.subMenu,
-        className: "options-wrapper2"
+        className: "options-wrapper"
     }, mainElement)
 
-    const elementHeight = "40.67px"
-    const gapHeight = "20px"
+    subMenuElement.style.top = `calc(${index} * ${ELEMENT_HEIGHT} + ${index} * ${GAP_HEIGHT})`
 
-    subMenuElement.style.top = `calc(${index + 1} * ${elementHeight} + ${index + 1} * ${gapHeight})`
-
-    options.forEach(({ id, innerText, onclick }) => createElement("button", {
-        id,
+    options.forEach(({ innerText, onclick }) => createElement("button", {
         className: "sub-options",
         innerText,
         onclick
     }, subMenuElement))
 }
 
-
-// TODO: make 1 function from the 2
-const renderDigitalProgrammeList = () => {
-    removeSubMenuElement()
-    handleOptionsElementOnClick("digitalProgrammeList")
-    console.log("Digital Programme List")
-}
-
-const renderDigitalEpg = () => {
-    removeSubMenuElement()
-    handleOptionsElementOnClick("digitalEpg")
-    console.log("Digital EPG")
-}
-
 // DATA
 const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.internetContentsTab,
-        param2: "internetContents",
+        buttonName: "internetContents",
         innerText: "Internet Contents",
         options: [
             {
-                id: "amazon-prime-video",
                 innerText: "Amazon Prime Video",
                 onclick: () => console.log("Amazon Prime Video")
             },
             {
-                id: "netflix",
                 innerText: "Netflix",
                 onclick: () => console.log("Netflix")
             },
             {
-                id: "bbc-iplayer",
                 innerText: "BBC iPlayer",
                 onclick: () => console.log("BBC iPlayer")
             },
             {
-                id: "youtube",
                 innerText: "YouTube",
                 onclick: () => console.log("YouTube")
             },
@@ -129,25 +102,23 @@ const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.digitalProgrammeListTab,
         innerText: "Digital Programme List",
-        onclick: renderDigitalProgrammeList
+        onclick: () => onclick
     },
     {
         id: ELEMENT_IDS.digitalEpgTab,
         innerText: "Digital EPG",
-        onclick: renderDigitalEpg
+        onclick: () => onclick
     },
     {
         id: ELEMENT_IDS.applicationsTab,
-        param2: "applications",
+        buttonName: "applications",
         innerText: "Applications",
         options: [
             {
-                id: ELEMENT_IDS.photoSharingPlus,
                 innerText: "Photo Sharing Plus",
                 onclick: () => console.log("Photo Sharing Plus"),
             },
             {
-                id: ELEMENT_IDS.photoFrameMode,
                 innerText: "Photo Frame Mode",
                 onclick: () => console.log("Photo Frame Mode"),
             },
@@ -155,26 +126,22 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.recordingsTab,
-        param2: "recordings",
+        buttonName: "recordings",
         innerText: "Recordings",
         options: [
             {
-                id: ELEMENT_IDS.titleList,
                 innerText: "Title List",
                 onclick: () => console.log("Title List")
             },
             {
-                id: ELEMENT_IDS.timerList,
                 innerText: "Timer List",
                 onclick: () => console.log("Timer List"),
             },
             {
-                id: ELEMENT_IDS.errorList,
                 innerText: "Error List",
                 onclick: () => console.log("Error List"),
             },
             {
-                id: ELEMENT_IDS.manualTimerRec,
                 innerText: "Manual Timer REC",
                 onclick: () => console.log("Manual Timer REC"),
             },
@@ -182,21 +149,18 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.mediaTab,
-        param2: "media",
+        buttonName: "media",
         innerText: "Media",
         options: [
             {
-                id: ELEMENT_IDS.photo,
                 innerText: "Photo",
                 onclick: () => console.log("Photo"),
             },
             {
-                id: ELEMENT_IDS.music,
                 innerText: "Music",
                 onclick: () => console.log("Music"),
             },
             {
-                id: ELEMENT_IDS.video,
                 innerText: "Video",
                 onclick: () => console.log("Video")
             },
@@ -204,16 +168,14 @@ const HOME_MENU_BUTTONS_ARRAY = [
     },
     {
         id: ELEMENT_IDS.settingsTab,
-        param2: "settings",
+        buttonName: "settings",
         innerText: "Settings",
         options: [
             {
-                id: ELEMENT_IDS.systemSettings,
                 innerText: "System Settings",
                 onclick: () => console.log("System Settings"),
             },
             {
-                id: ELEMENT_IDS.customerSupport,
                 innerText: "Customer Support",
                 onclick: () => console.log("Customer Support"),
             },
@@ -223,26 +185,44 @@ const HOME_MENU_BUTTONS_ARRAY = [
 //
 
 const renderHomeMenu = () => {
+    const screenWrapperElement = getScreenWrapperElement()?.remove()
+
     const mainElement = createElement("main", undefined, appElement)
 
     createElement("p", {
         innerText: "HOME"
     }, mainElement)
 
-    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, options, param2, onclick }, index) => createElement("button", {
+    HOME_MENU_BUTTONS_ARRAY.forEach(({ id, innerText, options, buttonName, onclick }, index) => createElement("button", {
         id,
         className: "home-options",
         innerText,
         onclick: () => {
 
             if (onclick) {
-                onclick()
+                removeSubMenuElement()
+
+                const mainElement = getMainElement()
+                mainElement.remove()
+
+                const screenWrapperElement = createElement("div", {
+                    id: ELEMENT_IDS.screenWrapper
+                }, appElement)
+
+                createElement("p", {
+                    id: ELEMENT_IDS.screenText,
+                    innerText: innerText
+                }, screenWrapperElement)
+
+                createElement("button", {
+                    innerText: "Back",
+                    onclick: renderHomeMenu
+                }, screenWrapperElement)
             }
 
-            if (options && param2) {
-                renderSubMenu(options, param2, index)
+            if (options && buttonName) {
+                renderSubMenu(options, buttonName, index)
             }
-
         }
     }, mainElement))
 }
