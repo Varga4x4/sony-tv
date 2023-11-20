@@ -102,12 +102,12 @@ const HOME_MENU_BUTTONS_ARRAY = [
     {
         id: ELEMENT_IDS.digitalProgrammeListTab,
         innerText: "Digital Programme List",
-        onclick: () => console.log(innerText)
+        onclick: () => onclick
     },
     {
         id: ELEMENT_IDS.digitalEpgTab,
         innerText: "Digital EPG",
-        onclick: () => console.log(innerText)
+        onclick: () => onclick
     },
     {
         id: ELEMENT_IDS.applicationsTab,
@@ -185,11 +185,7 @@ const HOME_MENU_BUTTONS_ARRAY = [
 //
 
 const renderHomeMenu = () => {
-    const screenWrapperElement = getScreenWrapperElement()
-
-    if (screenWrapperElement) {
-        screenWrapperElement.remove()
-    }
+    const screenWrapperElement = getScreenWrapperElement()?.remove()
 
     const mainElement = createElement("main", undefined, appElement)
 
@@ -213,12 +209,12 @@ const renderHomeMenu = () => {
                     id: ELEMENT_IDS.screenWrapper
                 }, appElement)
 
-                const screenText = createElement("p", {
+                createElement("p", {
                     id: ELEMENT_IDS.screenText,
                     innerText: innerText
                 }, screenWrapperElement)
 
-                const backButtonElement = createElement("button", {
+                createElement("button", {
                     innerText: "Back",
                     onclick: renderHomeMenu
                 }, screenWrapperElement)
